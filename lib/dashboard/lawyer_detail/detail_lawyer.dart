@@ -126,7 +126,7 @@ class _DetailsState extends State<Details> {
             ),
             Stack(
               children: [
-                Container(
+                SizedBox(
                   height: Get.height * .32,
                   width: Get.size.width,
                   child: ClipRRect(
@@ -414,12 +414,12 @@ class _DetailsState extends State<Details> {
                           fontWeight: FontWeight.w600,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 4,
                       ),
                       Text(
                         widget.bio,
-                        style:  TextStyle(
+                        style:  const TextStyle(
                           fontSize: 13,
                           color: Colors.black54,
                         ),
@@ -588,11 +588,11 @@ class _DetailsState extends State<Details> {
     );
   }
 
-  Future<double?> _showRatingDialog(BuildContext context) async {
+  Future<double?> showRatingDialog(BuildContext context) async {
     return showDialog<double>(
       context: context,
       builder: (BuildContext context) {
-        double _userRating = 0;
+        double userRating = 0;
         return AlertDialog(
           title: const Text('Rate this lawyer'),
           content: Column(
@@ -600,14 +600,14 @@ class _DetailsState extends State<Details> {
             children: [
               const Text('Please rate this lawyer'),
               Slider(
-                value: _userRating,
+                value: userRating,
                 min: 0,
                 max: 5,
                 divisions: 5,
-                label: _userRating.toString(),
+                label: userRating.toString(),
                 onChanged: (value) {
                   setState(() {
-                    _userRating = value;
+                    userRating = value;
                   });
                 },
               ),
@@ -616,7 +616,7 @@ class _DetailsState extends State<Details> {
           actions: [
             ElevatedButton(
               onPressed: () {
-                Navigator.of(context).pop(_userRating);
+                Navigator.of(context).pop(userRating);
               },
               child: const Text('Submit'),
             ),

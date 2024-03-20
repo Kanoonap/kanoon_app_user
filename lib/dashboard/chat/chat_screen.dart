@@ -13,8 +13,8 @@ import 'package:chat_bubbles/chat_bubbles.dart';
 import '../../controllers/data_controller.dart';
 import '../../controllers/notification.dart';
 import '../../utils/AppColors.dart';
-import '../../widgets/my_text.dart';
-  import 'package:encrypt/encrypt.dart' as encrypt;
+import 'package:encrypt/encrypt.dart' as encrypt;
+
 class ChatScreen extends StatefulWidget {
   final String? image, name, groupId, fcmToken, uid;
   const ChatScreen(
@@ -38,13 +38,9 @@ class _ChatScreenState extends State<ChatScreen> {
 
   //
 
-
-
- final key = encrypt.Key.fromUtf8('my32lengthsupersecretnooneknows1');
+  final key = encrypt.Key.fromUtf8('my32lengthsupersecretnooneknows1');
   final iv = encrypt.IV.fromLength(16);
-   encrypt.Encrypter? encrypter;
-
-  
+  encrypt.Encrypter? encrypter;
 
   DataController dataController = Get.put(DataController());
   CallController callController = Get.put(CallController());
@@ -103,8 +99,8 @@ class _ChatScreenState extends State<ChatScreen> {
             ),
             Column(
               children: [
-                myText(
-                  text: widget.name,
+                Text(
+                  widget.name.toString(),
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
@@ -170,30 +166,28 @@ class _ChatScreenState extends State<ChatScreen> {
       ),
       body: Column(
         children: [
-
-
-           const SizedBox(
-                  height: 12,
-                ),
-                // Container(
-                //   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
-                //   width: 180,
-                //   height: 25,
-                //   decoration: ShapeDecoration(
-                //     shape: RoundedRectangleBorder(
-                //       side: const BorderSide(width: 1, color: Color(0xFFD3D3D3)),
-                //       borderRadius: BorderRadius.circular(6),
-                //     ),
-                //   ),
-                //   child: const Text(
-                //     'Your chat is end-to-end encrypted',
-                //     style: TextStyle(
-                //       color: Color(0xFF535353),
-                //       fontSize: 10,
-                //       fontWeight: FontWeight.w500,
-                //     ),
-                //   ),
-                // ),
+          const SizedBox(
+            height: 12,
+          ),
+          // Container(
+          //   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+          //   width: 180,
+          //   height: 25,
+          //   decoration: ShapeDecoration(
+          //     shape: RoundedRectangleBorder(
+          //       side: const BorderSide(width: 1, color: Color(0xFFD3D3D3)),
+          //       borderRadius: BorderRadius.circular(6),
+          //     ),
+          //   ),
+          //   child: const Text(
+          //     'Your chat is end-to-end encrypted',
+          //     style: TextStyle(
+          //       color: Color(0xFF535353),
+          //       fontSize: 10,
+          //       fontWeight: FontWeight.w500,
+          //     ),
+          //   ),
+          // ),
           Expanded(
               child: Obx(() => dataController.isMessageSending.value
                   ? const Center(
@@ -272,7 +266,7 @@ class _ChatScreenState extends State<ChatScreen> {
                             return;
                           }
                           String message = messageController.text;
-                          
+
                           messageController.clear();
 
                           Map<String, dynamic> data = {
@@ -337,8 +331,8 @@ class _ChatScreenState extends State<ChatScreen> {
                                 size: 24,
                               ),
                               onTap: () async {
-                                final ImagePicker _picker = ImagePicker();
-                                final XFile? image = await _picker.pickImage(
+                                final ImagePicker picker = ImagePicker();
+                                final XFile? image = await picker.pickImage(
                                     source: ImageSource.camera);
                                 if (image != null) {
                                   // Navigator.pop(context);
@@ -381,8 +375,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
                                   LocalNotificationService.sendNotification(
                                       title: 'New message from $userName',
-                                      message:
-                                          '$userName sent you an image',
+                                      message: '$userName sent you an image',
                                       token: widget.fcmToken);
                                 }
                               },
@@ -400,8 +393,9 @@ class _ChatScreenState extends State<ChatScreen> {
       ),
     ));
   }
-  // 
-  // 
+
+  //
+  //
   String formatMessageTimestamp(DateTime timestamp) {
     DateTime now = DateTime.now();
     DateTime today = DateTime(now.year, now.month, now.day);
@@ -415,17 +409,17 @@ class _ChatScreenState extends State<ChatScreen> {
       return DateFormat('MMM d, yyyy hh:mm a').format(timestamp);
     }
   }
- String formatTime(DateTime timestamp) {
+
+  String formatTime(DateTime timestamp) {
     return DateFormat('hh:mm a').format(timestamp);
   }
-  // 
-// 
+
+  //
+//
   textMessageIReceived(DocumentSnapshot doc) {
     String message = '';
     try {
       message = doc.get('message');
- 
-
     } catch (e) {
       message = '';
     }
@@ -525,7 +519,7 @@ class _ChatScreenState extends State<ChatScreen> {
             Padding(
               padding: const EdgeInsets.only(top: 5, right: 20),
               child: Text(
-                    DateFormat('hh:mm a').format(doc.get('timeStamp').toDate()),
+                DateFormat('hh:mm a').format(doc.get('timeStamp').toDate()),
 
                 // DateFormat.Hm().format(doc.get('timeStamp').toDate()),
                 style: const TextStyle(color: Colors.black),
@@ -587,7 +581,7 @@ class _ChatScreenState extends State<ChatScreen> {
               Padding(
                 padding: const EdgeInsets.only(top: 2),
                 child: Text(
-                    DateFormat('hh:mm a').format(doc.get('timeStamp').toDate()),
+                  DateFormat('hh:mm a').format(doc.get('timeStamp').toDate()),
 
                   // DateFormat.Hm().format(doc.get('timeStamp').toDate()),
                   style: const TextStyle(color: Colors.black),
@@ -662,7 +656,7 @@ class _ChatScreenState extends State<ChatScreen> {
               Padding(
                 padding: const EdgeInsets.only(top: 5),
                 child: Text(
-                    DateFormat('hh:mm a').format(doc.get('timeStamp').toDate()),
+                  DateFormat('hh:mm a').format(doc.get('timeStamp').toDate()),
 
                   // DateFormat.Hm().format(doc.get('timeStamp').toDate()),
                   style: const TextStyle(color: Colors.black),
@@ -767,7 +761,7 @@ class _ChatScreenState extends State<ChatScreen> {
               Padding(
                 padding: const EdgeInsets.only(top: 2),
                 child: Text(
-                    DateFormat('hh:mm a').format(doc.get('timeStamp').toDate()),
+                  DateFormat('hh:mm a').format(doc.get('timeStamp').toDate()),
 
                   // DateFormat.Hm().format(doc.get('timeStamp').toDate()),
                   style: const TextStyle(color: Colors.black),
@@ -879,7 +873,7 @@ class _ChatScreenState extends State<ChatScreen> {
               Padding(
                 padding: const EdgeInsets.only(top: 2),
                 child: Text(
-                    DateFormat('hh:mm a').format(doc.get('timeStamp').toDate()),
+                  DateFormat('hh:mm a').format(doc.get('timeStamp').toDate()),
 
                   // DateFormat.Hm().format(doc.get('timeStamp').toDate()),
                   style: const TextStyle(color: Colors.black),
@@ -903,11 +897,11 @@ class _ChatScreenState extends State<ChatScreen> {
             children: [
               InkWell(
                 onTap: () async {
-                  final ImagePicker _picker = ImagePicker();
+                  final ImagePicker picker = ImagePicker();
                   final XFile? image =
-                      await _picker.pickImage(source: ImageSource.camera);
+                      await picker.pickImage(source: ImageSource.camera);
                   if (image != null) {
-                    Navigator.pop(context);
+                    Get.back();
 
                     dataController.isMessageSending(true);
 
@@ -959,11 +953,12 @@ class _ChatScreenState extends State<ChatScreen> {
               ),
               InkWell(
                   onTap: () async {
-                    final ImagePicker _picker = ImagePicker();
+                    final ImagePicker picker = ImagePicker();
                     final XFile? image =
-                        await _picker.pickImage(source: ImageSource.gallery);
+                        await picker.pickImage(source: ImageSource.gallery);
                     if (image != null) {
-                      Navigator.pop(context);
+                      Get.back();
+
                       dataController.isMessageSending(true);
 
                       String imageUrl = await dataController

@@ -12,7 +12,7 @@ class AllLawyers extends StatefulWidget {
   State<AllLawyers> createState() => _AllLawyersState();
 }
 
-class _AllLawyersState extends State<AllLawyers> {
+class _AllLawyersState extends State<AllLawyers> with AutomaticKeepAliveClientMixin {
   LawyerCOntroller lawyerCOntroller = Get.put(LawyerCOntroller());
   TextEditingController searchController = TextEditingController();
   String selectedCategory = '';
@@ -28,11 +28,14 @@ class _AllLawyersState extends State<AllLawyers> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return SafeArea(
       child: Scaffold(
         body: Padding(
           padding: const EdgeInsets.all(12.0),
           child: SingleChildScrollView(
+                          physics: const BouncingScrollPhysics(),
+
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -440,6 +443,9 @@ class _AllLawyersState extends State<AllLawyers> {
       ),
     );
   }
+  
+  @override
+  bool get wantKeepAlive => true;
 }
 
 class DecorateContainer extends StatelessWidget {

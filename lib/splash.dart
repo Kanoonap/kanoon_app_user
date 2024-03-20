@@ -20,17 +20,16 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   User? users;
   late Position _currentPosition;
 
-   @override
+  @override
   void initState() {
     super.initState();
-     Timer(const Duration(seconds: 3), () {
-      
-      Get.to(()=>const AuthGate());
+    Timer(const Duration(seconds: 3), () {
+      Get.to(() => const AuthGate());
     });
     _getCurrentLocation();
     _checkAuthentication();
@@ -40,7 +39,8 @@ class _SplashScreenState extends State<SplashScreen> {
     _currentPosition = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.best);
   }
- void _checkAuthentication() async {
+
+  void _checkAuthentication() async {
     _auth.authStateChanges().listen((user) async {
       if (user != null) {
         await _checkUserLocation();
@@ -57,28 +57,22 @@ class _SplashScreenState extends State<SplashScreen> {
         await _firestore.collection('users').doc(_auth.currentUser!.uid).get();
     String latitude = documentSnapshot.get('latitude');
     String longitude = documentSnapshot.get('longitude');
-    double distanceInMeters = await Geolocator.distanceBetween(
+    double distanceInMeters = Geolocator.distanceBetween(
       _currentPosition.latitude,
       _currentPosition.longitude,
       latitude.toDouble(),
       longitude.toDouble(),
     );
-    // 
-    // 
-    
+    //
+    //
+
     if (distanceInMeters > 20000) {
       await _auth.signOut();
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => const OnboardingScreens()),
-      );
+      Get.to(() => const OnboardingScreens());
     } else {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => const Dashboard()),
-      );
+      Get.to(() => const Dashboard());
     }
   }
-
-  
 
   @override
   Widget build(BuildContext context) {

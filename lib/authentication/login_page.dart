@@ -1,5 +1,6 @@
 import 'package:country_picker/country_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
@@ -120,10 +121,14 @@ class _LoginPageState extends State<LoginPage> {
                       borderRadius: BorderRadius.circular(10)),
                   child: InternationalPhoneNumberInput(
                     onInputChanged: (PhoneNumber number) {
-                      print(number.phoneNumber);
+                      if (kDebugMode) {
+                        print(number.phoneNumber);
+                      }
                     },
                     onInputValidated: (bool value) {
-                      print(value);
+                      if (kDebugMode) {
+                        print(value);
+                      }
                     },
                     selectorConfig: const SelectorConfig(
                       selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
@@ -136,7 +141,9 @@ class _LoginPageState extends State<LoginPage> {
                         signed: true, decimal: true),
                     inputBorder: InputBorder.none,
                     onSaved: (PhoneNumber number) {
-                      print('On Saved: $number');
+                      if (kDebugMode) {
+                        print('On Saved: $number');
+                      }
                     },
                   ),
                 ),
@@ -247,7 +254,9 @@ class _LoginPageState extends State<LoginPage> {
                 40.heightBox,
                 GestureDetector(
                   onTap: () async {
-                    print(phoneController.text + phone);
+                    if (kDebugMode) {
+                      print(phoneController.text + phone);
+                    }
                     Get.to(() => const VerificationScreen(
                           phoneNumber: '',
                         ));

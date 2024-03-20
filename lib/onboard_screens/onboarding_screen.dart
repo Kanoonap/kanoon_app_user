@@ -10,11 +10,11 @@ class OnboardingScreens extends StatefulWidget {
   const OnboardingScreens({super.key});
 
   @override
-  _OnboardingScreensState createState() => _OnboardingScreensState();
+  State<OnboardingScreens> createState() => _OnboardingScreensState();
 }
 
 class _OnboardingScreensState extends State<OnboardingScreens> {
-  final PageController _pageController = PageController(initialPage: 0);
+ final PageController _pageController = PageController(initialPage: 0);
   int _currentPage = 0;
    AuthController authController=Get.put(AuthController());
 @override
@@ -141,10 +141,10 @@ class _Onboard1State extends State<Onboard1> {
                     Container(
                       height: 10,
                     ),
-                    Text(
+                    const Text(
                       "Don't need to go to court",
                       style: TextStyle(
-                        color: const Color.fromARGB(255, 255, 193, 0),
+                        color: Color.fromARGB(255, 255, 193, 0),
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                       ),
@@ -250,7 +250,7 @@ class _Onboard2State extends State<Onboard2> {
                     Container(
                       height: 10,
                     ),
-                    Text(
+                    const Text(
                       "Find Your Lawyers easily",
                       style: TextStyle(
                         color: Colors.amber,
@@ -362,7 +362,7 @@ class _Onboard3State extends State<Onboard3> {
                     Container(
                       height: 10,
                     ),
-                    Text(
+                    const Text(
                       "Find Your Lawyers easily",
                       style: TextStyle(
                         color: Colors.amber,

@@ -31,7 +31,7 @@ class _UserNotificationScreenState extends State<UserNotificationScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               48.heightBox,
-              Row(
+              const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   // IconButton(
@@ -52,7 +52,7 @@ class _UserNotificationScreenState extends State<UserNotificationScreen> {
                   //   ),
                   // ),
                   // SizedBox(width: Get.width * .21),
-                  const Text(
+                  Text(
                     'Notifications',
                     textAlign: TextAlign.center,
                     style: TextStyle(
@@ -107,7 +107,7 @@ class _UserNotificationScreenState extends State<UserNotificationScreen> {
                           children: [
                             GestureDetector(
                               onTap: () {
-                                  Get.to(()=>ChatScreen());
+                                  Get.to(()=>const ChatScreen());
                                 
                               },
                                 onLongPress: () async {

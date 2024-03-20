@@ -28,8 +28,10 @@ class LocalNotificationService {
 
   static void display(RemoteMessage message) async {
     try {
-      print("In Notification method");
-      Random random = new Random();
+      if (kDebugMode) {
+        print("In Notification method");
+      }
+      Random random =  Random();
       int id = random.nextInt(1000);
       const NotificationDetails notificationDetails = NotificationDetails(
           android: AndroidNotificationDetails(
@@ -38,7 +40,9 @@ class LocalNotificationService {
         importance: Importance.max,
         priority: Priority.high,
       ));
-      print("my id is ${id.toString()}");
+      if (kDebugMode) {
+        print("my id is ${id.toString()}");
+      }
       await _flutterLocalNotificationsPlugin.show(
         id,
         message.notification!.title,
@@ -46,15 +50,23 @@ class LocalNotificationService {
         notificationDetails,
       );
     } on Exception catch (e) {
-      print('Error>>>$e');
+      if (kDebugMode) {
+        print('Error>>>$e');
+      }
     }
   }
 
   static Future<void> sendNotification(
       {String? title, String? message, String? token}) async {
-    print("\n\n\n\n\n\n\n\n\n\n\n\n");
-    print("token is $token");
-    print("\n\n\n\n\n\n\n\n\n\n\n\n");
+    if (kDebugMode) {
+      print("\n\n\n\n\n\n\n\n\n\n\n\n");
+    }
+    if (kDebugMode) {
+      print("token is $token");
+    }
+    if (kDebugMode) {
+      print("\n\n\n\n\n\n\n\n\n\n\n\n");
+    }
 
     final data = {
       "click_action": "FLUTTER_NOTIFICATION_CLICK",
@@ -80,27 +92,39 @@ class LocalNotificationService {
         ),
       );
 
-      print(r.body);
+      if (kDebugMode) {
+        print(r.body);
+      }
       if (r.statusCode == 200) {
-        print('DOne');
+        if (kDebugMode) {
+          print('DOne');
+        }
       } else {
-        print(r.statusCode);
+        if (kDebugMode) {
+          print(r.statusCode);
+        }
       }
     } catch (e) {
-      print('exception $e');
+      if (kDebugMode) {
+        print('exception $e');
+      }
     }
   }
 
   static storeToken() async {
     try {
       String? token = await FirebaseMessaging.instance.getToken();
-      print(token);
+      if (kDebugMode) {
+        print(token);
+      }
       FirebaseFirestore.instance
           .collection('users')
           .doc(FirebaseAuth.instance.currentUser!.uid)
           .update({'fcmToken': token!}, );
     } catch (e) {
-      print("error is $e");
+      if (kDebugMode) {
+        print("error is $e");
+      }
     }
   }
 

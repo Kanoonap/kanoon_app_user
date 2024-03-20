@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:path/path.dart' as Path;
 import 'package:intl/intl.dart';
@@ -148,7 +149,9 @@ class DataController extends GetxController {
         'time': DateTime.now()
       });
     } catch (e) {
-      print(" Error: ${e.toString()}");
+      if (kDebugMode) {
+        print(" Error: ${e.toString()}");
+      }
     }
   }
 
@@ -177,7 +180,9 @@ class DataController extends GetxController {
     await taskSnapshot.ref.getDownloadURL().then((value) {
       fileUrl = value;
     });
-    print("Url $fileUrl");
+    if (kDebugMode) {
+      print("Url $fileUrl");
+    }
     return fileUrl;
   }
 //

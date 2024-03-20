@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kanoon_app/splash.dart';
@@ -7,8 +8,14 @@ import 'package:kanoon_app/splash.dart';
 import 'controllers/notification.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  print(message.data.toString());
-  print(message.notification!.toString());
+  if (kDebugMode) {
+    if (kDebugMode) {
+      print(message.data.toString());
+    }
+  }
+  if (kDebugMode) {
+    print(message.notification!.toString());
+  }
 }
 
 void main() async {

@@ -89,7 +89,7 @@ Future<Position> getCurrentLocation()async{
       context: context,
       builder: (context) {
         return AlertDialog(
-          content: Container(
+          content: SizedBox(
             height: 120,
             child: Column(
               children: [
@@ -123,14 +123,7 @@ Future<Position> getCurrentLocation()async{
     );
   }
   //
-  //
-
-  // Future<void> updateUserLocation(String userId) async {
-  //   await _firestore.collection('users').doc(userId).set({
-  //     'location':
-  //         GeoPoint(_currentPosition.latitude, _currentPosition.longitude),
-  //   }, SetOptions(merge: true));
-  // }
+ 
 
   //
 
@@ -195,7 +188,7 @@ Future<Position> getCurrentLocation()async{
         Fluttertoast.showToast(msg: 'User not found');
       }
     } catch (e) {
-      print(e);
+      // print(e);
       progressDialog.dismiss();
       Fluttertoast.showToast(msg: 'Something went wrong');
     }
@@ -209,6 +202,19 @@ Future<Position> getCurrentLocation()async{
     try {
       UserCredential userCredential = await auth.signInWithEmailAndPassword(
           email: email, password: password);
+           final location = await getCurrentLocation();
+  
+    
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .update({
+              'longitude': location.longitude.toString(),
+        'latitude': location.latitude.toString(),
+        
+      });
+              progressDialog.show();
+
       if (userCredential.user != null) {
         progressDialog.dismiss();
         Fluttertoast.showToast(msg: 'Login Successfully');
@@ -266,10 +272,4 @@ Future<Position> getCurrentLocation()async{
     return imageUrl;
   }
 
-  void signUpMethod(
-      {required String email,
-      required String name,
-      required String password,
-      required String city,
-      required String address}) {}
 }

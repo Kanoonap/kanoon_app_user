@@ -67,7 +67,7 @@ class _CallScreenState extends State<CallScreen> {
                           widget.call.receiverId,
                           context,
                         );
-                        Navigator.pop(context);
+                        Get.back();
                       },
                       icon: const Icon(
                         Icons.call_end,
